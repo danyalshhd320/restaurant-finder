@@ -1,0 +1,9 @@
+export const PORT = Number(process.env.PORT ?? 3000);
+export const MONGO_URI = process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/locations';
+export const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS ?? 60000);
+export const RATE_LIMIT_MAX_WRITES = Number(process.env.RATE_LIMIT_MAX_WRITES ?? 20);
+export const NEARBY_LOCATION_RADIUS = Number(process.env.NEARBY_LOCATION_RADIUS ?? 10);
+export const JWT_SECRET = process.env.JWT_SECRET ?? 'change-me-in-production';
+export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN ?? '1h';
+export const AUTH_USERNAME = process.env.AUTH_USERNAME ?? '';
+export const AUTH_PASSWORD = process.env.AUTH_PASSWORD ?? '';

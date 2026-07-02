@@ -1,0 +1,15 @@
+export const RESPONSE_MESSAGES = {
+  NOT_FOUND: 'Not found',
+  MISSING_AUTH_HEADER: 'Missing Authorization header',
+  INVALID_AUTH_TOKEN: 'Invalid authorization token',
+  INVALID_OR_EXPIRED_TOKEN: 'Invalid or expired token',
+  ADMIN_ROLE_REQUIRED: 'Admin role required',
+  INVALID_CREDENTIALS: 'Invalid credentials',
+  SEED_DATA_LOADED: 'Seed data loaded',
+  INVALID_LOCATION_ID: 'You must supply a location ID',
+  INVALID_REQUIRED_FIELDS: 'You must supply all required fields in the correct format',
+  INVALID_COORDINATES: 'You must supply valid x and y coordinates',
+  LOCATION_NOT_FOUND: 'Location not found',
+  TOO_MANY_WRITE_REQUESTS: 'Too many write requests. Please try again later.',
+  LOCATIONS_CREATED: '100 locations created successfully',
+};

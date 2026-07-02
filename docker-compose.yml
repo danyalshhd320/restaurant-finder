@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: DockerFile
+    environment:
+      MONGO_URI: mongodb://mongo:27017/locations
+      PORT: 3000
+      BASE_URL: https://www.alphavantage.co
+      API_KEY: PZIW8UETGPX137MP
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  test:
+    build:
+      context: .
+      dockerfile: DockerFile
+      target: build
+    entrypoint: ["npm", "test"]
+
+volumes:
+  mongo-data:
