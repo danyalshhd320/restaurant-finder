@@ -34,6 +34,9 @@ services:
       target: build
     environment:
       MONGO_URI: mongodb://mongo:27017/locations
+      AUTH_USERNAME: admin
+      AUTH_PASSWORD: password
+      JWT_SECRET: change-me-in-production
     depends_on:
       mongo:
         condition: service_healthy
