@@ -7,62 +7,16 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    services:
-      mongo:
-        image: mongo:7
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd "mongosh --eval 'db.adminCommand({ ping: 1 })' >/dev/null || exit 1"
-          --health-interval=5s
-          --health-timeout=5s
-          --health-retries=12
-    env:
-      MONGO_URI: mongodb://localhost:27017/locations
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project
-        run: npm run build
-
-      - name: Wait for Mongo
+      - name: Build and run tests inside Docker Compose
         run: |
-          for i in {1..30}; do
-            if bash -c "echo > /dev/tcp/localhost/27017" >/dev/null 2>&1; then
-              echo "mongo ready"; exit 0
-            fi
-            echo "waiting for mongo..."; sleep 1
-          done
-          echo "mongo did not become ready"; exit 1
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Build and start Docker Compose services
-        run: |
-          docker compose build
-          docker compose up -d
-
-      - name: Wait for API to become healthy
-        run: |
-          for i in {1..30}; do
-            if curl -fsS -X POST -H "Content-Type: application/json" -d '{"role":"ci"}' http://localhost:3000/auth/token; then
-              exit 0
-            fi
-            sleep 2
-          done
-          docker compose logs
-          exit 1
+          # Build services and run the 'test' service (will depend on mongo)
+          docker compose up --build --exit-code-from test test
 
       - name: Tear down Docker Compose
         if: always()
         run: docker compose down -v
+
