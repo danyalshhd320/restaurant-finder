@@ -1,5 +1,8 @@
 # Restaurant Finder API
 
+## Demo Video
+https://www.loom.com/share/432322ebcd5c41f3a474ffc7ae2193d4
+
 ## Overview
 
 This API provides restaurant lookup and search by coordinate. It supports:
